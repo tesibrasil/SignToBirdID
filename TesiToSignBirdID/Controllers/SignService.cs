@@ -49,6 +49,7 @@ namespace SignBirdID.Controllers
                     Cliente_Segreto = signDigitalInfo.ClientSecret,
                     Numero_Acesso = signDigitalInfo.AccessNumber,
                     Data_Di_Scadenza = signDigitalInfo.ExpirationDate,
+                    Autorizzazione = signDigitalInfo.Authorization,
                     Eliminato = signDigitalInfo.Disabled
                 },
                 transaction: CurrentTransaction,
@@ -68,7 +69,8 @@ namespace SignBirdID.Controllers
                 {
                     id = signDigitalInfo.Id,
                     Numero_Acesso = signDigitalInfo.AccessNumber,
-                    Data_Di_Scadenza = signDigitalInfo.ExpirationDate
+                    Data_Di_Scadenza = signDigitalInfo.ExpirationDate,
+                    Autorizzazione = signDigitalInfo.Authorization
                 },
                 transaction: CurrentTransaction,
                 commandType: CommandType.StoredProcedure);

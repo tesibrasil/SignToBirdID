@@ -42,14 +42,14 @@
             this.groupBox1.Controls.Add(this.lblMessage);
             this.groupBox1.Location = new System.Drawing.Point(9, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(508, 179);
+            this.groupBox1.Size = new System.Drawing.Size(540, 179);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             // 
             // pbxLoad
             // 
             this.pbxLoad.Image = ((System.Drawing.Image)(resources.GetObject("pbxLoad.Image")));
-            this.pbxLoad.Location = new System.Drawing.Point(346, 19);
+            this.pbxLoad.Location = new System.Drawing.Point(385, 19);
             this.pbxLoad.Name = "pbxLoad";
             this.pbxLoad.Size = new System.Drawing.Size(150, 150);
             this.pbxLoad.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -63,18 +63,19 @@
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMessage.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblMessage.Location = new System.Drawing.Point(10, 74);
+            this.lblMessage.Location = new System.Drawing.Point(20, 76);
             this.lblMessage.Name = "lblMessage";
             this.lblMessage.Size = new System.Drawing.Size(333, 31);
             this.lblMessage.TabIndex = 0;
             this.lblMessage.Text = "Assinando Documento...";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FrmSigningProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(527, 193);
+            this.ClientSize = new System.Drawing.Size(559, 193);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

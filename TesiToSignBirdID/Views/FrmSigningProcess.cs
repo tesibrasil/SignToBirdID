@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignBirdID.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,14 @@ namespace SignBirdID.Views
 {
     public partial class FrmSigningProcess : Form
     {
-        public FrmSigningProcess()
+        SignDigitalInfo digitalInfo;
+        string[] Params = null; 
+        public FrmSigningProcess(SignDigitalInfo signInfo = null,string [] args = null)
         {
             InitializeComponent();
+            digitalInfo = signInfo;
+            Params = args;
+
         }
 
         private void pbxLoad_Click(object sender, EventArgs e)
@@ -24,7 +30,7 @@ namespace SignBirdID.Views
 
         private void pbxLoad_DoubleClick(object sender, EventArgs e)
         {
-            Close();
+           Close();
         }
     }
 }

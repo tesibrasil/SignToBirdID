@@ -117,6 +117,7 @@
             this.txtTokenOTP.Size = new System.Drawing.Size(219, 53);
             this.txtTokenOTP.TabIndex = 0;
             this.txtTokenOTP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtTokenOTP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTokenOTP_KeyDown);
             this.txtTokenOTP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTokenOTP_KeyPress);
             // 
             // frmPrincipal

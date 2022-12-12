@@ -11,6 +11,7 @@ CREATE TABLE FIRMA_DIGITALE_BIRDID
 	DOCUMENTO VARCHAR(14),
 	CLIENTE_ID VARCHAR(100),
 	CLIENTE_SEGRETO VARCHAR(100),
+	AUTORIZZAZIONE VARCHAR(100),
 	NUMERO_ACESSO VARCHAR(100),
 	DATA_DI_SCADENZA DATETIME,
 	ELIMINATO BIT
@@ -34,6 +35,7 @@ BEGIN
 	CLIENTE_SEGRETO as ClientSecret,
 	NUMERO_ACESSO as AccessNumber,
 	DATA_DI_SCADENZA as ExpirationDate,
+	AUTORIZZAZIONE as 'Authorization',
 	ELIMINATO as 'Disabled'
 	FROM dbo.FIRMA_DIGITALE_BIRDID
 	WHERE 
@@ -52,6 +54,7 @@ ALTER PROCEDURE SP_SignBirdID_CreateSignDigitalInfo
 @Cliente_ID varchar(100),
 @Cliente_Segreto varchar(100),
 @Numero_Acesso varchar(100),
+@Autorizzazione varchar(100),
 @Data_Di_Scadenza DATETIME,
 @Eliminato bit
 AS
@@ -64,8 +67,9 @@ BEGIN
 		CLIENTE_SEGRETO,
 		NUMERO_ACESSO,
 		DATA_DI_SCADENZA,
-		ELIMINATO
-	)
+		ELIMINATO,
+		AUTORIZZAZIONE
+		)
 	VALUES
 	(
 		@Documento,
@@ -73,7 +77,8 @@ BEGIN
 		@Cliente_Segreto,
 		@Numero_Acesso,
 		@Data_Di_Scadenza,
-		@Eliminato
+		@Eliminato,
+		@Autorizzazione
 	)
 	
 	SELECT SCOPE_IDENTITY();
@@ -87,14 +92,16 @@ EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_CreateSignDigitalInfo] AS BEGIN SET 
 ALTER PROCEDURE SP_SignBirdID_UpdateSignDigitalInfo 
 @ID int,
 @Numero_Acesso varchar(100),
-@Data_Di_Scadenza DATETIME
+@Data_Di_Scadenza DATETIME,
+@Autorizzazione varchar(100)
 AS
 BEGIN
 
     UPDATE dbo.FIRMA_DIGITALE_BIRDID
 	SET 
 	NUMERO_ACESSO = @Numero_Acesso,
-	DATA_DI_SCADENZA = @Data_Di_Scadenza
+	DATA_DI_SCADENZA = @Data_Di_Scadenza,
+	AUTORIZZAZIONE = @Autorizzazione
 	WHERE ID = @ID
 
 END

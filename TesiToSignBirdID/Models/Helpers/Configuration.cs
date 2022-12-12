@@ -13,7 +13,9 @@ namespace SignBirdID.Models
     public class Configuration
     {
         public string connectionString { get; set; }
-        public string ip { get; set; }
+        public string endpoint { get; set; }
+        public string clientid { get; set; }
+        public string clientsecret { get; set; }
 
         public Configuration ReadConfiguration()
         {
@@ -23,7 +25,7 @@ namespace SignBirdID.Models
 
             if (!File.Exists(@path))
             {
-                string j = "{\"connectionString\":\"\",\"ip\":\"\"}";
+                string j = "{\"connectionString\":\"\",\"endpoint\":\"\",\"clientid\":\"\",\"clientsecret\":\"\" }";
                 File.WriteAllText(@path, j);
             }
 
