@@ -64,11 +64,17 @@
     <Compile Include="Models\Helpers\Connection.cs" />
     <Compile Include="Models\Helpers\Crypto.cs" />
     <Compile Include="Models\SignDigitalInfo.cs" />
-    <Compile Include="Views\Principal.cs">
+    <Compile Include="Views\FrmSigningProcess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Principal.Designer.cs">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <Compile Include="Views\FrmSigningProcess.Designer.cs">
+      <DependentUpon>FrmSigningProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPrincipal.Designer.cs">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,8 +88,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Views\Principal.resx">
-      <DependentUpon>Principal.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FrmPrincipal.resx">
+      <DependentUpon>FrmPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmSigningProcess.resx">
+      <DependentUpon>FrmSigningProcess.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -99,6 +108,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\load.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load1.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

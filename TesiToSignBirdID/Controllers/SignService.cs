@@ -19,14 +19,15 @@ namespace SignBirdID.Controllers
             //
         }    
 
+        //GET
         public SignDigitalInfo GetSignDigitalInfoByDocument(SqlConnection conn, string document)
         {
             using (conn)
             {
-                var signDigitalInfo = conn.Query<SignDigitalInfo>("SignBirdID_GetSignDigitalInfoByDocument",
+                var signDigitalInfo = conn.Query<SignDigitalInfo>("SP_SignBirdID_GetSignDigitalInfoByDocument",
                 param: new
                 {
-                    Documento = document,
+                    Documento = document
                 },
                 transaction: CurrentTransaction,
                 commandType: CommandType.StoredProcedure).FirstOrDefault();
@@ -35,6 +36,45 @@ namespace SignBirdID.Controllers
             }
         }
 
+        //CREATE
+        public int CreateSignDigitalInfo(SqlConnection conn, SignDigitalInfo signDigitalInfo)
+        {
+            using (conn)
+            {
+                var id = conn.ExecuteScalar<int>("SP_SignBirdID_CreateSignDigitalInfo",
+                param: new
+                {
+                    Documento = signDigitalInfo.Document,
+                    Cliente_ID = signDigitalInfo.ClientID,
+                    Cliente_Segreto = signDigitalInfo.ClientSecret,
+                    Numero_Acesso = signDigitalInfo.AccessNumber,
+                    Data_Di_Scadenza = signDigitalInfo.ExpirationDate,
+                    Eliminato = signDigitalInfo.Disabled
+                },
+                transaction: CurrentTransaction,
+                commandType: CommandType.StoredProcedure);
 
+                return id;
+            }
+        }
+
+        //UPDATE
+        public int UpdateSignDigitalInfo(SqlConnection conn, SignDigitalInfo signDigitalInfo)
+        {
+            using (conn)
+            {
+                var id = conn.ExecuteScalar<int>("SP_SignBirdID_UpdateSignDigitalInfo",
+                param: new
+                {
+                    id = signDigitalInfo.Id,
+                    Numero_Acesso = signDigitalInfo.AccessNumber,
+                    Data_Di_Scadenza = signDigitalInfo.ExpirationDate
+                },
+                transaction: CurrentTransaction,
+                commandType: CommandType.StoredProcedure);
+
+                return id;
+            }
+        }
     }
 }
