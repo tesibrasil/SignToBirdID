@@ -39,6 +39,7 @@ namespace SignBirdID.Views
         private void tmpSign_TickAsync(object sender, EventArgs e)
         {
             tmpSign.Enabled = false;
+            SignLog.CreateLog("Iniciado processo de assinatura");
 
             var th = new Thread(Process);
             th.Start();
@@ -53,12 +54,14 @@ namespace SignBirdID.Views
                 lblMessage.ForeColor = Color.Green;
                 pbxLoad.Visible = false;
                 pbxOk.Visible = true;
+                SignLog.CreateLog("Assinatura realizada | cerificado:" + Params[0] + " Exame:" + Params[1] + " Arquivo:" + Params[2]);
             }
             else
             {
                 lblMessage.ForeColor = Color.Red;
                 pbxLoad.Visible = false;
                 pbxErro.Visible = true;
+                SignLog.CreateLog("Falha na assinatura | cerificado:" + Params[0] + " Exame:" + Params[1] + " Arquivo:" + Params[2]);
             }
 
             lblMessage.Text = r.Message;

@@ -33,6 +33,7 @@ namespace SignBirdID
         public frmPrincipal(string [] args)
         {
             Params = args;
+
             InitializeComponent();
 
         }
@@ -50,16 +51,18 @@ namespace SignBirdID
                     superConn.Connect(@configuration.connectionString);
                     //Verificar se token esta expirado
                     //se sim solicitar novo | se não pular para assinatura.
-                    
-                    signInfo = signService.GetSignDigitalInfoByDocument(superConn.conn, Params[0]);
+                    SignLog.CreateLog("Conectou com o banco de dados.");
 
+                    signInfo = signService.GetSignDigitalInfoByDocument(superConn.conn, Params[0]);
+                    SignLog.CreateLog("Buscou informações autenticação do certificado.");
                     //Existe registro sigo em frente
-                    if(signInfo != null)
+                    if (signInfo != null)
                     {
                         superConn.conn.Close();
                         if(signInfo.ExpirationDate > DateTime.Now)
                         {
                             //Data na validade vou assinar
+                            SignLog.CreateLog("Autenticação dentro da data de validade.");
                             this.Hide();
                             var dialog = new FrmSigningProcess(signInfo,Params);
                             dialog.ShowDialog();
@@ -68,6 +71,7 @@ namespace SignBirdID
                         else
                         {
                             IsEdit = true;
+                            SignLog.CreateLog("Autenticação expirou.");
                             //Data expirou vou atualizar
                             //Exibir formulario
                         }
@@ -75,6 +79,7 @@ namespace SignBirdID
                     }
                     else
                     {
+                        SignLog.CreateLog("Nenhuma autenticação encontrada, processo de criação iniciado");
                         signInfo = new SignDigitalInfo();
                         IsEdit = false;
                         //Nenhum registro encontrado vou criar
@@ -83,7 +88,7 @@ namespace SignBirdID
                 }
                 catch (Exception ex)
                 {
-
+                    SignLog.CreateLog($"Falha ao conectar Bando de dados! | {ex.Message}");
                     MessageBox.Show($"Falha ao conectar Banco de Dados!\n {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
@@ -123,7 +128,8 @@ namespace SignBirdID
                 return;
 
             var json = SignAPI.Authorize(configuration, txtTokenOTP.Text.Trim(), Params[0]);
-            
+            SignLog.CreateLog("Metodo Authorize executado");
+
             if (!json.Equals("erro"))
             {
                 superConn.Connect(configuration.connectionString);
@@ -137,6 +143,7 @@ namespace SignBirdID
 
                     //Atualizo valores no banco
                     signService.UpdateSignDigitalInfo(superConn.conn, signInfo);
+                    SignLog.CreateLog("Autenticação atualizada.");
 
                 } 
                 else 
@@ -150,6 +157,7 @@ namespace SignBirdID
 
                     //crio um novo registro
                     var id = signService.CreateSignDigitalInfo(superConn.conn, signInfo);
+                    SignLog.CreateLog("Nova autenticação criada.");
                 }
 
                 this.Hide();

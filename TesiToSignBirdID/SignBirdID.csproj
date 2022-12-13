@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SignService.cs" />
+    <Compile Include="Models\SignLog.cs" />
     <Compile Include="Models\SignReturn.cs" />
     <Compile Include="Models\Helpers\Configuration.cs" />
     <Compile Include="Models\Helpers\Connection.cs" />
