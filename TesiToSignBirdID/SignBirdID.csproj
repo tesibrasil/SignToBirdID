@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SignService.cs" />
+    <Compile Include="Models\SignReturn.cs" />
     <Compile Include="Models\Helpers\Configuration.cs" />
     <Compile Include="Models\Helpers\Connection.cs" />
     <Compile Include="Models\Helpers\Crypto.cs" />
@@ -140,12 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\load.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\load1.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

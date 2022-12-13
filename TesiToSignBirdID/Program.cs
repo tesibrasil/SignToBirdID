@@ -14,9 +14,7 @@ namespace SignBirdID
         /// </summary>
         [STAThread]
         static void Main(string [] args)
-        {
-            MessageBox.Show(args[0]);
-            
+        {            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmPrincipal(args));

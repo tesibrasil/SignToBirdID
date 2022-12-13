@@ -56,6 +56,7 @@ namespace SignBirdID
                     //Existe registro sigo em frente
                     if(signInfo != null)
                     {
+                        superConn.conn.Close();
                         if(signInfo.ExpirationDate > DateTime.Now)
                         {
                             //Data na validade vou assinar
