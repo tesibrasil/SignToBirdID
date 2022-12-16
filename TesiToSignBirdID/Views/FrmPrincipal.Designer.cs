@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -35,12 +36,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtTokenOTP = new System.Windows.Forms.TextBox();
+            this.pbxLoadToken = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxLoadToken)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.pbxLoadToken);
             this.groupBox1.Controls.Add(this.btnCancel);
             this.groupBox1.Controls.Add(this.btnOK);
             this.groupBox1.Location = new System.Drawing.Point(12, 182);
@@ -120,6 +124,19 @@
             this.txtTokenOTP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTokenOTP_KeyDown);
             this.txtTokenOTP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtTokenOTP_KeyPress);
             // 
+            // pbxLoadToken
+            // 
+            this.pbxLoadToken.BackColor = System.Drawing.Color.Transparent;
+            this.pbxLoadToken.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pbxLoadToken.ErrorImage")));
+            this.pbxLoadToken.Image = ((System.Drawing.Image)(resources.GetObject("pbxLoadToken.Image")));
+            this.pbxLoadToken.Location = new System.Drawing.Point(72, 19);
+            this.pbxLoadToken.Name = "pbxLoadToken";
+            this.pbxLoadToken.Size = new System.Drawing.Size(100, 100);
+            this.pbxLoadToken.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbxLoadToken.TabIndex = 3;
+            this.pbxLoadToken.TabStop = false;
+            this.pbxLoadToken.Visible = false;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -141,6 +158,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxLoadToken)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -154,6 +172,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtTokenOTP;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pbxLoadToken;
     }
 }
 

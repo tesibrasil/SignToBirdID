@@ -13,11 +13,15 @@ namespace SignBirdID
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string [] args)
-        {            
+        static int Main(string [] args)
+        {
+            SignLog.CreateLog("-------------------------------- PROCESSO INICIADO --------------------------------");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmPrincipal(args));
+            frmPrincipal principal = new frmPrincipal(args);
+            Application.Run(principal);
+
+            return principal.DiddyReturn;
         }
     }
 }

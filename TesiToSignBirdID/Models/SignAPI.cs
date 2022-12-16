@@ -25,18 +25,20 @@ namespace SignBirdID.Models
             RestRequest request = new RestRequest("", Method.Post);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
+            
+            SignLog.CreateLog("Montou o header da Autorização");
 
             string json = "{\"client_id\":\""+ configuration.clientid +"\",\"client_secret\":\""+ configuration.clientsecret +"\",\"username\":\""+ cpf +"\",\"password\":\""+ otp +"\",\"grant_type\":\"password\",\"scope\":\"signature_session\",\"lifetime\":43200}";
 
             request.AddParameter("application/json", json, ParameterType.RequestBody);
-
+            SignLog.CreateLog("Montou o corpo da autorização");
             try
             {
                 var response = client.Execute(request);
 
                 if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Created)
                 {
-                    MessageBox.Show("Erro: \n" + response.ErrorMessage, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SignLog.CreateLog("Erro: " + response.ErrorMessage);
                     r = "erro";
                 }
                 else
@@ -47,7 +49,7 @@ namespace SignBirdID.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SignLog.CreateLog("Erro: " + ex.Message);
                 r = "erro";
             }
            
@@ -58,14 +60,21 @@ namespace SignBirdID.Models
 
         public static string Signature(Configuration configuration, SignDigitalInfo signInfo, string[] parameters)
         {
+            
             var r = "";
+            
             var client = new RestClient($"http://{configuration.endpoint}/signature-service");
+           
             RestRequest request = new RestRequest("", Method.Post);
+            
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Authorization", signInfo.Authorization);
+           
+            SignLog.CreateLog("Montou o header da assinatura");
 
             string base64File = ConvertFileToBase64(parameters[2]);
+            SignLog.CreateLog("Montou o base64 do arquivo");
 
             string json = "{\"certificate_alias\": \"\",\"type\": \"PDFSignature\",\"hash_algorithm\": \"SHA256\",\"auto_fix_document\": true,"+
                 "\"signature_settings\": [{\"id\": \"default\",\"contact\": \"123456789\",\"location\": \"SaoPauloSP\",\"reason\": \"Aprovação de documento\","+
@@ -73,15 +82,19 @@ namespace SignBirdID.Models
                 "\"visible_sign_page\": 1,\"extraInfo\":[]}],\"documents_source\": \"DATA_URL\",\"documents\": [{\"id\": \""+ parameters[1] +"\",\"signature_setting\": \"default\","+
                 "\"original_file_name\": \"TESTE-ASSINATURA.pdf\",\"data\": \"data:application/pdf;base64,"+ base64File +"\"}]}";
 
+    
             request.AddParameter("application/json", json, ParameterType.RequestBody);
 
+
+            SignLog.CreateLog("Montou o body da assinatura");
             try
             {
                 var response = client.Execute(request);
-
+                SignLog.CreateLog("Efetuou o execute Request");
                 if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Created)
                 {
-                    MessageBox.Show("Erro: \n" + response.ErrorMessage,"Erro",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    SignLog.CreateLog("Erro: "+ response.Content);
+                    MessageBox.Show("Erro: \n" + response.Content,"Erro",MessageBoxButtons.OK,MessageBoxIcon.Error);
                     r = "erro";
                 }
                 else
@@ -92,6 +105,7 @@ namespace SignBirdID.Models
             }
             catch (Exception ex)
             {
+                SignLog.CreateLog("Erro: " + ex.Message);
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 r = "erro";
             }

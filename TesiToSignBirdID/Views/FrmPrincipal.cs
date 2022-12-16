@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,11 @@ namespace SignBirdID
         Configuration configuration = new Configuration();
 
         SignDigitalInfo signInfo = new SignDigitalInfo();
+        public string SuperJson { get; set; } = string.Empty;
 
         bool IsEdit = false;
 
+        public int DiddyReturn { get; set; } = 0;
         public string [] Params { get; set; }
         public frmPrincipal(string [] args)
         {
@@ -54,7 +57,7 @@ namespace SignBirdID
                     SignLog.CreateLog("Conectou com o banco de dados.");
 
                     signInfo = signService.GetSignDigitalInfoByDocument(superConn.conn, Params[0]);
-                    SignLog.CreateLog("Buscou informações autenticação do certificado.");
+                    SignLog.CreateLog("Buscou informações de autenticação do certificado.");
                     //Existe registro sigo em frente
                     if (signInfo != null)
                     {
@@ -66,6 +69,7 @@ namespace SignBirdID
                             this.Hide();
                             var dialog = new FrmSigningProcess(signInfo,Params);
                             dialog.ShowDialog();
+                            DiddyReturn = dialog.DiddyReturn;
                             this.Close();
                         }
                         else
@@ -88,7 +92,7 @@ namespace SignBirdID
                 }
                 catch (Exception ex)
                 {
-                    SignLog.CreateLog($"Falha ao conectar Bando de dados! | {ex.Message}");
+                    SignLog.CreateLog($"Falha ao conectar Banco de dados! | {ex.Message}");
                     MessageBox.Show($"Falha ao conectar Banco de Dados!\n {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
@@ -122,55 +126,88 @@ namespace SignBirdID
           
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private async void btnOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtTokenOTP.Text))
                 return;
 
-            var json = SignAPI.Authorize(configuration, txtTokenOTP.Text.Trim(), Params[0]);
-            SignLog.CreateLog("Metodo Authorize executado");
-
-            if (!json.Equals("erro"))
+            if (!File.Exists(Params[2]))
             {
-                superConn.Connect(configuration.connectionString);
-                ResponseAPI.Authorize authorize = JsonConvert.DeserializeObject<ResponseAPI.Authorize>(json);
+                MessageBox.Show("O Arquivo: \n" + Params[2] + "\n Não Existe! Favor Verificar origem.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (IsEdit)
+            btnOK.Enabled = false;
+            pbxLoadToken.Visible = true; ;
+            try
+            {
+                var json = string.Empty;
+                await CallAuthorize();
+                 
+                SignLog.CreateLog("Metodo Authorize executado");
+
+                if (!json.Equals("erro"))
                 {
-                    signInfo.Authorization = authorize.authorization;
-                    signInfo.AccessNumber = authorize.access_token;
-                    signInfo.ExpirationDate = DateTime.Now.AddHours(12);
+                    superConn.Connect(configuration.connectionString);
+                    ResponseAPI.Authorize authorize = JsonConvert.DeserializeObject<ResponseAPI.Authorize>(SuperJson);
 
-                    //Atualizo valores no banco
-                    signService.UpdateSignDigitalInfo(superConn.conn, signInfo);
-                    SignLog.CreateLog("Autenticação atualizada.");
+                    if (IsEdit)
+                    {
+                        signInfo.Authorization = authorize.authorization;
+                        signInfo.AccessNumber = authorize.access_token;
+                        signInfo.ExpirationDate = DateTime.Now.AddHours(12);
 
-                } 
-                else 
-                {
-                    signInfo.Document = Params[0];
-                    signInfo.ClientSecret = configuration.clientsecret;
-                    signInfo.ClientID= configuration.clientid;
-                    signInfo.Authorization = authorize.authorization;
-                    signInfo.AccessNumber = authorize.access_token;
-                    signInfo.ExpirationDate = DateTime.Now.AddHours(12);
+                        //Atualizo valores no banco
+                        signService.UpdateSignDigitalInfo(superConn.conn, signInfo);
+                        SignLog.CreateLog("Autenticação atualizada.");
 
-                    //crio um novo registro
-                    var id = signService.CreateSignDigitalInfo(superConn.conn, signInfo);
-                    SignLog.CreateLog("Nova autenticação criada.");
+                    }
+                    else
+                    {
+                        signInfo.Document = Params[0];
+                        signInfo.ClientSecret = configuration.clientsecret;
+                        signInfo.ClientID = configuration.clientid;
+                        signInfo.Authorization = authorize.authorization;
+                        signInfo.AccessNumber = authorize.access_token;
+                        signInfo.ExpirationDate = DateTime.Now.AddHours(12);
+
+                        //crio um novo registro
+                        var id = signService.CreateSignDigitalInfo(superConn.conn, signInfo);
+                        SignLog.CreateLog("Nova autenticação criada.");
+                    }
+
+                    this.Hide();
+                    var dialog = new FrmSigningProcess(signInfo,Params);
+                    dialog.ShowDialog();
+                    DiddyReturn = dialog.DiddyReturn;
+                    this.Close();
                 }
-
-                this.Hide();
-                var dialog = new FrmSigningProcess(signInfo);
-                dialog.ShowDialog();
-                this.Close();
+                else
+                {
+                    SignLog.CreateLog("Falha ao tentar autenticar.");
+                    MessageBox.Show("Falha ao tentar autenticar.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                txtTokenOTP.Clear();
+                SignLog.CreateLog("Falha ao tentar autenticar: " + ex.Message);
+                MessageBox.Show("Falha ao tentar autenticar.");
+                
             }
+
+            pbxLoadToken.Visible = false;
+            txtTokenOTP.Clear();
+            btnOK.Enabled = true;
         }
 
+        public async Task CallAuthorize()
+        {
+            await Task.Run(() => Authorize());
+        }
+        public void Authorize()
+        {
+           SuperJson = SignAPI.Authorize(configuration, txtTokenOTP.Text.Trim(), Params[0]);
+        }
         private void txtTokenOTP_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

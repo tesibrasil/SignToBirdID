@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSigningProcess));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblMessage = new System.Windows.Forms.Label();
-            this.tmpSign = new System.Windows.Forms.Timer(this.components);
-            this.tmpClose = new System.Windows.Forms.Timer(this.components);
             this.pbxErro = new System.Windows.Forms.PictureBox();
             this.pbxOk = new System.Windows.Forms.PictureBox();
             this.pbxLoad = new System.Windows.Forms.PictureBox();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.tmpSign = new System.Windows.Forms.Timer(this.components);
+            this.tmpClose = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxErro)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxOk)).BeginInit();
@@ -54,28 +54,6 @@
             this.groupBox1.Size = new System.Drawing.Size(499, 179);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            // 
-            // lblMessage
-            // 
-            this.lblMessage.AutoSize = true;
-            this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMessage.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblMessage.Location = new System.Drawing.Point(47, 78);
-            this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(333, 31);
-            this.lblMessage.TabIndex = 0;
-            this.lblMessage.Text = "Assinando Documento...";
-            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tmpSign
-            // 
-            this.tmpSign.Interval = 2000;
-            this.tmpSign.Tick += new System.EventHandler(this.tmpSign_TickAsync);
-            // 
-            // tmpClose
-            // 
-            this.tmpClose.Interval = 5000;
-            this.tmpClose.Tick += new System.EventHandler(this.tmpClose_Tick);
             // 
             // pbxErro
             // 
@@ -109,6 +87,28 @@
             this.pbxLoad.TabIndex = 2;
             this.pbxLoad.TabStop = false;
             this.pbxLoad.DoubleClick += new System.EventHandler(this.pbxLoad_DoubleClick);
+            // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMessage.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblMessage.Location = new System.Drawing.Point(47, 78);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(272, 26);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "Assinando Documento...";
+            this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tmpSign
+            // 
+            this.tmpSign.Interval = 2000;
+            this.tmpSign.Tick += new System.EventHandler(this.tmpSign_TickAsync);
+            // 
+            // tmpClose
+            // 
+            this.tmpClose.Interval = 5000;
+            this.tmpClose.Tick += new System.EventHandler(this.tmpClose_Tick);
             // 
             // FrmSigningProcess
             // 

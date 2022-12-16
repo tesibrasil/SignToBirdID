@@ -21,6 +21,7 @@ namespace SignBirdID.Views
         string[] Params = null;
         Configuration configuration = new Configuration();
         SignReturn r = new SignReturn();
+        public int DiddyReturn { get; set; } = 0;
         public FrmSigningProcess(SignDigitalInfo signInfo = null, string[] args = null)
         {
             InitializeComponent();
@@ -36,18 +37,26 @@ namespace SignBirdID.Views
             Close();
         }
 
-        private void tmpSign_TickAsync(object sender, EventArgs e)
+        private async void tmpSign_TickAsync(object sender, EventArgs e)
         {
             tmpSign.Enabled = false;
+
+            if (!File.Exists(Params[2]))
+            {
+                SignLog.CreateLog("O arquivo não existe " + Params[2]);
+                MessageBox.Show("O Arquivo: \n" + Params[2] + "\n Não Existe! Favor Verificar origem.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tmpClose.Enabled = true;
+                return;
+            }
+
             SignLog.CreateLog("Iniciado processo de assinatura");
 
-            var th = new Thread(Process);
-            th.Start();
+            await CallProcessAsync();
 
-            while (th.IsAlive)
-            {
-                //aguarda final da thread
-            }
+            //while (!pro.IsCompleted)
+            //{
+            //    //aguarda final da thread
+            //}
 
             if (!r.HasError)
             {
@@ -55,6 +64,7 @@ namespace SignBirdID.Views
                 pbxLoad.Visible = false;
                 pbxOk.Visible = true;
                 SignLog.CreateLog("Assinatura realizada | cerificado:" + Params[0] + " Exame:" + Params[1] + " Arquivo:" + Params[2]);
+                DiddyReturn = 1;
             }
             else
             {
@@ -62,6 +72,7 @@ namespace SignBirdID.Views
                 pbxLoad.Visible = false;
                 pbxErro.Visible = true;
                 SignLog.CreateLog("Falha na assinatura | cerificado:" + Params[0] + " Exame:" + Params[1] + " Arquivo:" + Params[2]);
+                DiddyReturn = 0;
             }
 
             lblMessage.Text = r.Message;
@@ -69,13 +80,20 @@ namespace SignBirdID.Views
             tmpClose.Enabled = true;
         }
 
+        public async Task CallProcessAsync()
+        {
+            await Task.Run(() => Process());
+        }
         public void Process()
         {
             configuration = configuration.ReadConfiguration();
+            
             string json = SignAPI.Signature(configuration, digitalInfo, Params);
-
+            
             if (!json.Equals("erro"))
             {
+                SignLog.CreateLog("Documento assinado.");
+
                 ResponseAPI.Signature signature = JsonConvert.DeserializeObject<ResponseAPI.Signature>(json);
 
                 string json2 = SignAPI.GetDownloadURL(configuration, signature.tcn, digitalInfo);
@@ -96,9 +114,12 @@ namespace SignBirdID.Views
 
                     r.Message = "Documento Assinado";
 
+                    SignLog.CreateLog("Download concluído em: " + Params[2]);
+
                 }
                 else
                 {
+                    SignLog.CreateLog("Falha ao buscar URL para download do arquivo.");
                     r.HasError = true;
                     r.Message = "Falha ao efetuar Download.";
                 }
@@ -106,15 +127,21 @@ namespace SignBirdID.Views
             }
             else
             {
+                SignLog.CreateLog("Falha no processo de assinatura");
+
                 lblMessage.ForeColor = Color.Red;
                 r.HasError = true;
                 r.Message = "Falha ao assinar arquivo.";
             }
+
+
+
         }
 
         private void tmpClose_Tick(object sender, EventArgs e)
         {
             tmpClose.Enabled = false;
+           
             Close();
         }
     }
