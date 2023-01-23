@@ -14,7 +14,8 @@ CREATE TABLE FIRMA_DIGITALE_BIRDID
 	AUTORIZZAZIONE VARCHAR(100),
 	NUMERO_ACESSO VARCHAR(100),
 	DATA_DI_SCADENZA DATETIME,
-	ELIMINATO BIT
+	ELIMINATO BIT,
+	MOSTRA_POSIZIONE_FIRMA BIT
 )
 
 GO
@@ -36,6 +37,7 @@ BEGIN
 	NUMERO_ACESSO as AccessNumber,
 	DATA_DI_SCADENZA as ExpirationDate,
 	AUTORIZZAZIONE as 'Authorization',
+	MOSTRA_POSIZIONE_FIRMA as ShowSignatureLocation,
 	ELIMINATO as 'Disabled'
 	FROM dbo.FIRMA_DIGITALE_BIRDID
 	WHERE 
@@ -56,6 +58,7 @@ ALTER PROCEDURE SP_SignBirdID_CreateSignDigitalInfo
 @Numero_Acesso varchar(100),
 @Autorizzazione varchar(100),
 @Data_Di_Scadenza DATETIME,
+@Mostra_Posizione_Firma bit
 @Eliminato bit
 AS
 BEGIN
@@ -68,7 +71,8 @@ BEGIN
 		NUMERO_ACESSO,
 		DATA_DI_SCADENZA,
 		ELIMINATO,
-		AUTORIZZAZIONE
+		AUTORIZZAZIONE,
+		MOSTRA_POSIZIONE_FIRMA
 		)
 	VALUES
 	(
@@ -78,16 +82,17 @@ BEGIN
 		@Numero_Acesso,
 		@Data_Di_Scadenza,
 		@Eliminato,
-		@Autorizzazione
+		@Autorizzazione,
+		@Mostra_Posizione_Firma
 	)
 	
 	SELECT SCOPE_IDENTITY();
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_CreateSignDigitalInfo' 
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_UpdateSignDigitalInfo' 
 AND ROUTINE_SCHEMA = 'dbo' AND ROUTINE_TYPE = 'PROCEDURE')
-EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_CreateSignDigitalInfo] AS BEGIN SET NOCOUNT ON; END')
+EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_UpdateSignDigitalInfo] AS BEGIN SET NOCOUNT ON; END')
 
 ALTER PROCEDURE SP_SignBirdID_UpdateSignDigitalInfo 
 @ID int,
@@ -102,6 +107,24 @@ BEGIN
 	NUMERO_ACESSO = @Numero_Acesso,
 	DATA_DI_SCADENZA = @Data_Di_Scadenza,
 	AUTORIZZAZIONE = @Autorizzazione
+	WHERE ID = @ID
+
+END
+GO
+
+F NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_UpdateShowSignatureLocation' 
+AND ROUTINE_SCHEMA = 'dbo' AND ROUTINE_TYPE = 'PROCEDURE')
+EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_UpdateShowSignatureLocation] AS BEGIN SET NOCOUNT ON; END')
+
+ALTER PROCEDURE SP_SignBirdID_UpdateShowSignatureLocation
+@ID int,
+@Mostra_Posizione_Firma bit
+AS
+BEGIN
+
+    UPDATE dbo.FIRMA_DIGITALE_BIRDID
+	SET 
+	MOSTRA_POSIZIONE_FIRMA = @Mostra_Posizione_Firma
 	WHERE ID = @ID
 
 END

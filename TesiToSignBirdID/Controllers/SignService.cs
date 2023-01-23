@@ -50,6 +50,7 @@ namespace SignBirdID.Controllers
                     Numero_Acesso = signDigitalInfo.AccessNumber,
                     Data_Di_Scadenza = signDigitalInfo.ExpirationDate,
                     Autorizzazione = signDigitalInfo.Authorization,
+                    Mostra_Posizione_Firma = signDigitalInfo.ShowSignatureLocation,
                     Eliminato = signDigitalInfo.Disabled
                 },
                 transaction: CurrentTransaction,
@@ -71,6 +72,23 @@ namespace SignBirdID.Controllers
                     Numero_Acesso = signDigitalInfo.AccessNumber,
                     Data_Di_Scadenza = signDigitalInfo.ExpirationDate,
                     Autorizzazione = signDigitalInfo.Authorization
+                },
+                transaction: CurrentTransaction,
+                commandType: CommandType.StoredProcedure);
+
+                return id;
+            }
+        }
+
+        public int UpdateShowSignatureLocation(SqlConnection conn, SignDigitalInfo signDigitalInfo)
+        {
+            using (conn)
+            {
+                var id = conn.ExecuteScalar<int>("SP_SignBirdID_UpdateShowSignatureLocation",
+                param: new
+                {
+                    id = signDigitalInfo.Id,
+                    Mostra_Posizione_Firma = signDigitalInfo.ShowSignatureLocation
                 },
                 transaction: CurrentTransaction,
                 commandType: CommandType.StoredProcedure);
