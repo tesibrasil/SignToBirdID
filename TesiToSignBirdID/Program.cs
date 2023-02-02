@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SignBirdID.Models;
+using SignBirdID.Views;
 
 namespace SignBirdID
 {
@@ -18,10 +19,14 @@ namespace SignBirdID
             SignLog.CreateLog("-------------------------------- PROCESSO INICIADO --------------------------------");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            frmPrincipal principal = new frmPrincipal(args);
-            Application.Run(principal);
 
-            return principal.DiddyReturn;
+            frmLocation principal = new frmLocation();
+            Application.Run(principal);
+            //frmPrincipal principal = new frmPrincipal(args);
+            //Application.Run(principal);
+
+            //return principal.DiddyReturn;
+            return 0;
         }
     }
 }
