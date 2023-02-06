@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SignBirdID.Controllers;
+using SignBirdID.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,58 +14,90 @@ namespace SignBirdID.Views
 {
     public partial class frmLocation : Form
     {
+        SignService signService = new SignService();
+        public int SignId { get; set; }
+       
+        Connection superConn = new Connection();
+
+        Configuration configuration = new Configuration();
+
         public frmLocation()
         {
             InitializeComponent();
-        }
-
-
-
-        public void ClearAll()
-        {
-            btnTopLeft.BackColor = Color.Transparent;
-            btnTopCenter.BackColor = Color.Transparent;
-            btnTopRight.BackColor = Color.Transparent;
-
-            btnBottomLeft.BackColor = Color.Transparent;
-            btnBottomCenter.BackColor = Color.Transparent;
-            btnBottomRight.BackColor = Color.Transparent;
+            configuration = configuration.ReadConfiguration();
+            superConn.Connect(@configuration.connectionString);
         }
 
         private void btnTopLeft_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnTopLeft.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
 
         private void btnTopCenter_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnTopCenter.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
 
         private void btnTopRight_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnTopRight.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
 
         private void btnBottomLeft_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnBottomLeft.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
 
         private void btnBottomCenter_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnBottomCenter.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
 
         private void btnBottomRight_Click(object sender, EventArgs e)
         {
-            ClearAll();
-            btnBottomRight.BackColor = Color.LightGreen;
+            CallButton(sender);
         }
+
+        public void CallButton(object sender)
+        {
+            ClearAll();
+            var btn = (Button)sender;
+            btn.BackColor = Color.LightGreen;
+            SaveAxle(btn.Text);
+        }
+        public void ClearAll()
+        {
+            btnTopLeft.BackColor = Color.Transparent;
+            btnTopLeft.ForeColor = Color.Transparent;
+
+            btnTopCenter.BackColor = Color.Transparent;
+            btnTopCenter.ForeColor = Color.Transparent;
+
+            btnTopRight.BackColor = Color.Transparent;
+            btnTopRight.ForeColor = Color.Transparent;
+
+            btnBottomLeft.BackColor = Color.Transparent;
+            btnBottomLeft.ForeColor = Color.Transparent;
+
+            btnBottomCenter.BackColor = Color.Transparent;
+            btnBottomCenter.ForeColor = Color.Transparent;
+
+            btnBottomRight.BackColor = Color.Transparent;
+            btnBottomRight.ForeColor = Color.Transparent;
+        }
+
+        public void SaveAxle(string axle)
+        {
+            //if (configuration != null)
+            //{
+            //    SignDigitalInfo sign = new SignDigitalInfo();
+            //    sign.Id = this.SignId;
+            //    sign.Axle = axle;
+
+            //    signService.UpdateAxle(superConn.conn, sign);
+            //}
+        }
+
+
     }
 }

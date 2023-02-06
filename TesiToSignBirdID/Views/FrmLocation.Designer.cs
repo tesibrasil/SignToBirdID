@@ -34,13 +34,13 @@
             this.cbxShowLocation = new System.Windows.Forms.CheckBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnTopCenter = new System.Windows.Forms.Button();
-            this.btnTopRight = new System.Windows.Forms.Button();
-            this.btnTopLeft = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnBottomCenter = new System.Windows.Forms.Button();
             this.btnBottomRight = new System.Windows.Forms.Button();
             this.btnBottomLeft = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnTopCenter = new System.Windows.Forms.Button();
+            this.btnTopRight = new System.Windows.Forms.Button();
+            this.btnTopLeft = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -79,6 +79,8 @@
             // cbxShowLocation
             // 
             this.cbxShowLocation.AutoSize = true;
+            this.cbxShowLocation.Checked = true;
+            this.cbxShowLocation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbxShowLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbxShowLocation.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.cbxShowLocation.Location = new System.Drawing.Point(11, 15);
@@ -96,12 +98,12 @@
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(138, 39);
             this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Aceitar";
+            this.btnOk.Text = "Assinar";
             this.btnOk.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
-            this.groupBox3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.groupBox3.BackColor = System.Drawing.Color.White;
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.btnBottomCenter);
             this.groupBox3.Controls.Add(this.btnBottomRight);
@@ -114,6 +116,60 @@
             this.groupBox3.Size = new System.Drawing.Size(511, 516);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.LightGray;
+            this.label2.Location = new System.Drawing.Point(107, 234);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(291, 46);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "DOCUMENTO";
+            // 
+            // btnBottomCenter
+            // 
+            this.btnBottomCenter.BackColor = System.Drawing.Color.Transparent;
+            this.btnBottomCenter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnBottomCenter.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnBottomCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBottomCenter.Location = new System.Drawing.Point(170, 422);
+            this.btnBottomCenter.Name = "btnBottomCenter";
+            this.btnBottomCenter.Size = new System.Drawing.Size(170, 93);
+            this.btnBottomCenter.TabIndex = 6;
+            this.btnBottomCenter.UseVisualStyleBackColor = false;
+            this.btnBottomCenter.Click += new System.EventHandler(this.btnBottomCenter_Click);
+            // 
+            // btnBottomRight
+            // 
+            this.btnBottomRight.BackColor = System.Drawing.Color.Transparent;
+            this.btnBottomRight.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnBottomRight.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnBottomRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBottomRight.ForeColor = System.Drawing.Color.Transparent;
+            this.btnBottomRight.Location = new System.Drawing.Point(340, 422);
+            this.btnBottomRight.Name = "btnBottomRight";
+            this.btnBottomRight.Size = new System.Drawing.Size(170, 93);
+            this.btnBottomRight.TabIndex = 5;
+            this.btnBottomRight.Text = "325:750";
+            this.btnBottomRight.UseVisualStyleBackColor = false;
+            this.btnBottomRight.Click += new System.EventHandler(this.btnBottomRight_Click);
+            // 
+            // btnBottomLeft
+            // 
+            this.btnBottomLeft.BackColor = System.Drawing.Color.Transparent;
+            this.btnBottomLeft.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnBottomLeft.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnBottomLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBottomLeft.Location = new System.Drawing.Point(1, 422);
+            this.btnBottomLeft.Name = "btnBottomLeft";
+            this.btnBottomLeft.Size = new System.Drawing.Size(170, 93);
+            this.btnBottomLeft.TabIndex = 4;
+            this.btnBottomLeft.UseVisualStyleBackColor = false;
+            this.btnBottomLeft.Click += new System.EventHandler(this.btnBottomLeft_Click);
             // 
             // btnTopCenter
             // 
@@ -147,62 +203,14 @@
             this.btnTopLeft.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnTopLeft.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
             this.btnTopLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTopLeft.ForeColor = System.Drawing.Color.Transparent;
             this.btnTopLeft.Location = new System.Drawing.Point(1, 5);
             this.btnTopLeft.Name = "btnTopLeft";
             this.btnTopLeft.Size = new System.Drawing.Size(170, 93);
             this.btnTopLeft.TabIndex = 0;
+            this.btnTopLeft.Text = "0:0";
             this.btnTopLeft.UseVisualStyleBackColor = false;
             this.btnTopLeft.Click += new System.EventHandler(this.btnTopLeft_Click);
-            // 
-            // btnBottomCenter
-            // 
-            this.btnBottomCenter.BackColor = System.Drawing.Color.Transparent;
-            this.btnBottomCenter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnBottomCenter.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.btnBottomCenter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBottomCenter.Location = new System.Drawing.Point(170, 422);
-            this.btnBottomCenter.Name = "btnBottomCenter";
-            this.btnBottomCenter.Size = new System.Drawing.Size(170, 93);
-            this.btnBottomCenter.TabIndex = 6;
-            this.btnBottomCenter.UseVisualStyleBackColor = false;
-            this.btnBottomCenter.Click += new System.EventHandler(this.btnBottomCenter_Click);
-            // 
-            // btnBottomRight
-            // 
-            this.btnBottomRight.BackColor = System.Drawing.Color.Transparent;
-            this.btnBottomRight.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnBottomRight.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.btnBottomRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBottomRight.Location = new System.Drawing.Point(340, 422);
-            this.btnBottomRight.Name = "btnBottomRight";
-            this.btnBottomRight.Size = new System.Drawing.Size(170, 93);
-            this.btnBottomRight.TabIndex = 5;
-            this.btnBottomRight.UseVisualStyleBackColor = false;
-            this.btnBottomRight.Click += new System.EventHandler(this.btnBottomRight_Click);
-            // 
-            // btnBottomLeft
-            // 
-            this.btnBottomLeft.BackColor = System.Drawing.Color.Transparent;
-            this.btnBottomLeft.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnBottomLeft.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
-            this.btnBottomLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBottomLeft.Location = new System.Drawing.Point(1, 422);
-            this.btnBottomLeft.Name = "btnBottomLeft";
-            this.btnBottomLeft.Size = new System.Drawing.Size(170, 93);
-            this.btnBottomLeft.TabIndex = 4;
-            this.btnBottomLeft.UseVisualStyleBackColor = false;
-            this.btnBottomLeft.Click += new System.EventHandler(this.btnBottomLeft_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.LightGray;
-            this.label2.Location = new System.Drawing.Point(104, 246);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(291, 46);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "DOCUMENTO";
             // 
             // frmLocation
             // 

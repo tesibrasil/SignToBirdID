@@ -15,7 +15,8 @@ CREATE TABLE FIRMA_DIGITALE_BIRDID
 	NUMERO_ACESSO VARCHAR(100),
 	DATA_DI_SCADENZA DATETIME,
 	ELIMINATO BIT,
-	MOSTRA_POSIZIONE_FIRMA BIT
+	MOSTRA_POSIZIONE_FIRMA BIT,
+	ASSE_X_Y VARCHAR(20)
 )
 
 GO
@@ -38,7 +39,8 @@ BEGIN
 	DATA_DI_SCADENZA as ExpirationDate,
 	AUTORIZZAZIONE as 'Authorization',
 	MOSTRA_POSIZIONE_FIRMA as ShowSignatureLocation,
-	ELIMINATO as 'Disabled'
+	ELIMINATO as 'Disabled',
+	ASSE_X_Y AS 'AXLE'
 	FROM dbo.FIRMA_DIGITALE_BIRDID
 	WHERE 
 	DOCUMENTO LIKE '%'+@Documento+'%'
@@ -58,8 +60,9 @@ ALTER PROCEDURE SP_SignBirdID_CreateSignDigitalInfo
 @Numero_Acesso varchar(100),
 @Autorizzazione varchar(100),
 @Data_Di_Scadenza DATETIME,
-@Mostra_Posizione_Firma bit
-@Eliminato bit
+@Mostra_Posizione_Firma bit,
+@Eliminato bit,
+@Asse  VARCHAR(20)
 AS
 BEGIN
 
@@ -72,7 +75,8 @@ BEGIN
 		DATA_DI_SCADENZA,
 		ELIMINATO,
 		AUTORIZZAZIONE,
-		MOSTRA_POSIZIONE_FIRMA
+		MOSTRA_POSIZIONE_FIRMA,
+		AXLE
 		)
 	VALUES
 	(
@@ -83,7 +87,8 @@ BEGIN
 		@Data_Di_Scadenza,
 		@Eliminato,
 		@Autorizzazione,
-		@Mostra_Posizione_Firma
+		@Mostra_Posizione_Firma,
+		@Asse
 	)
 	
 	SELECT SCOPE_IDENTITY();
@@ -112,7 +117,7 @@ BEGIN
 END
 GO
 
-F NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_UpdateShowSignatureLocation' 
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_UpdateShowSignatureLocation' 
 AND ROUTINE_SCHEMA = 'dbo' AND ROUTINE_TYPE = 'PROCEDURE')
 EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_UpdateShowSignatureLocation] AS BEGIN SET NOCOUNT ON; END')
 
@@ -126,6 +131,23 @@ BEGIN
 	SET 
 	MOSTRA_POSIZIONE_FIRMA = @Mostra_Posizione_Firma
 	WHERE ID = @ID
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'SP_SignBirdID_UpdateSignatureLocation' 
+AND ROUTINE_SCHEMA = 'dbo' AND ROUTINE_TYPE = 'PROCEDURE')
+EXEC('CREATE PROCEDURE [dbo].[SP_SignBirdID_UpdateSignatureLocation] AS BEGIN SET NOCOUNT ON; END')
+
+ALTER PROCEDURE SP_SignBirdID_UpdateSignatureLocation
+@ID int,
+@Asse VARCHAR(20)
+AS
+BEGIN
+
+    UPDATE dbo.FIRMA_DIGITALE_BIRDID
+	SET 
+	ASSE = @Asse
 
 END
 GO

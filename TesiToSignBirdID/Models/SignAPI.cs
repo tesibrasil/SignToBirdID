@@ -62,7 +62,8 @@ namespace SignBirdID.Models
         {
             
             var r = "";
-            
+            string[] axle = signInfo.Axle.Split(':');
+
             var client = new RestClient($"http://{configuration.endpoint}/signature-service");
            
             RestRequest request = new RestRequest("", Method.Post);
@@ -78,7 +79,7 @@ namespace SignBirdID.Models
 
             string json = "{\"certificate_alias\": \"\",\"type\": \"PDFSignature\",\"hash_algorithm\": \"SHA256\",\"auto_fix_document\": true,"+
                 "\"signature_settings\": [{\"id\": \"default\",\"contact\": \"123456789\",\"location\": \"SaoPauloSP\",\"reason\": \"Aprovação de documento\","+
-                "\"visible_signature\": true,\"visible_sign_x\": "+ configuration.eixoX +",\"visible_sign_y\": "+ configuration.eixoY +",\"visible_sign_width\": 230,\"visible_sign_height\": 50,"+
+                "\"visible_signature\": true,\"visible_sign_x\": "+ axle[0] +",\"visible_sign_y\": "+ axle[1] + ",\"visible_sign_width\": 230,\"visible_sign_height\": 50,"+
                 "\"visible_sign_page\": 1,\"extraInfo\":[]}],\"documents_source\": \"DATA_URL\",\"documents\": [{\"id\": \""+ parameters[1] +"\",\"signature_setting\": \"default\","+
                 "\"original_file_name\": \"TESTE-ASSINATURA.pdf\",\"data\": \"data:application/pdf;base64,"+ base64File +"\"}]}";
 

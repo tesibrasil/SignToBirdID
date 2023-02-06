@@ -16,6 +16,7 @@ namespace SignBirdID.Models
         public DateTime ExpirationDate { get; set; }
         public string Authorization { get; set; }
         public int ShowSignatureLocation { get; set; }
+        public string Axle { get; set; }
         public int Disabled { get; set; }
 
         public SignDigitalInfo()
