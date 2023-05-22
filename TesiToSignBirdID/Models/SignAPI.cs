@@ -18,7 +18,7 @@ namespace SignBirdID.Models
             //
         }
 
-       public static string Authorize(Configuration configuration, string otp, string cpf)
+        public static string Authorize(Configuration configuration, string otp, string cpf)
         {
             var r = "";
             var client = new RestClient($"http://{configuration.endpoint}/oauth");
@@ -55,8 +55,6 @@ namespace SignBirdID.Models
            
             return r;
         }
-
-
 
         public static string Signature(Configuration configuration, SignDigitalInfo signInfo, string[] parameters)
         {
@@ -114,7 +112,6 @@ namespace SignBirdID.Models
             return r;
         }
 
-
         private static string ConvertFileToBase64(string FilePath)
         {
             byte[] temp = File.ReadAllBytes(FilePath);
@@ -123,7 +120,6 @@ namespace SignBirdID.Models
 
             return temp64;
         }
-
 
         public static string GetDownloadURL(Configuration configuration, string tcn, SignDigitalInfo signInfo)
         {
