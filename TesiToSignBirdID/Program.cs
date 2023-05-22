@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Essy.Tools.InputBox;
 using SignBirdID.Models;
 using SignBirdID.Views;
 
@@ -17,16 +18,26 @@ namespace SignBirdID
         static int Main(string [] args)
         {
             SignLog.CreateLog("-------------------------------- PROCESSO INICIADO --------------------------------");
+          
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            frmLocation principal = new frmLocation();
-            Application.Run(principal);
-            //frmPrincipal principal = new frmPrincipal(args);
-            //Application.Run(principal);
+            /* if(args.Length != 3 && args.Length != 0)
+             {
+                 SignLog.CreateLog("-------------------------------- passo 1 --------------------------------");
+                 return 1;
+             }
+            */
+            //frmLocation location = new frmLocation(new SignDigitalInfo());
+            //Application.Run(location);
+            //return 0;
 
-            //return principal.DiddyReturn;
-            return 0;
+            frmPrincipal principal = new frmPrincipal(args);
+            Application.Run(principal);
+
+            return principal.DiddyReturn;
+
+
         }
     }
 }

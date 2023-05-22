@@ -28,7 +28,7 @@ namespace SignBirdID.Models
             
             SignLog.CreateLog("Montou o header da Autorização");
 
-            string json = "{\"client_id\":\""+ configuration.clientid +"\",\"client_secret\":\""+ configuration.clientsecret +"\",\"username\":\""+ cpf +"\",\"password\":\""+ otp +"\",\"grant_type\":\"password\",\"scope\":\"signature_session\",\"lifetime\":43200}";
+            string json = "{\"client_id\":\""+ configuration.clientid +"\",\"client_secret\":\""+ configuration.clientsecret +"\",\"username\":\""+ cpf +"\",\"password\":\""+ otp + "\",\"grant_type\":\"password\",\"scope\":\"signature_session\",\"lifetime\":432000}";
 
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             SignLog.CreateLog("Montou o corpo da autorização");
@@ -79,8 +79,8 @@ namespace SignBirdID.Models
 
             string json = "{\"certificate_alias\": \"\",\"type\": \"PDFSignature\",\"hash_algorithm\": \"SHA256\",\"auto_fix_document\": true,"+
                 "\"signature_settings\": [{\"id\": \"default\",\"contact\": \"123456789\",\"location\": \"SaoPauloSP\",\"reason\": \"Aprovação de documento\","+
-                "\"visible_signature\": true,\"visible_sign_x\": "+ axle[0] +",\"visible_sign_y\": "+ axle[1] + ",\"visible_sign_width\": 230,\"visible_sign_height\": 50,"+
-                "\"visible_sign_page\": 1,\"extraInfo\":[]}],\"documents_source\": \"DATA_URL\",\"documents\": [{\"id\": \""+ parameters[1] +"\",\"signature_setting\": \"default\","+
+                "\"visible_signature\": true,\"visible_sign_x\": "+ axle[0] +",\"visible_sign_y\": "+ axle[1] + ",\"visible_sign_width\": 190,\"visible_sign_height\": 50,"+
+                "\"visible_sign_page\": -1,\"extraInfo\":[]}],\"documents_source\": \"DATA_URL\",\"documents\": [{\"id\": \""+ parameters[1] +"\",\"signature_setting\": \"default\","+
                 "\"original_file_name\": \"TESTE-ASSINATURA.pdf\",\"data\": \"data:application/pdf;base64,"+ base64File +"\"}]}";
 
     
@@ -94,8 +94,8 @@ namespace SignBirdID.Models
                 SignLog.CreateLog("Efetuou o execute Request");
                 if (response.StatusCode != System.Net.HttpStatusCode.OK && response.StatusCode != System.Net.HttpStatusCode.Created)
                 {
-                    SignLog.CreateLog("Erro: "+ response.Content);
-                    MessageBox.Show("Erro: \n" + response.Content,"Erro",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    SignLog.CreateLog("Erro: "+ response.StatusCode);
+                    MessageBox.Show("Erro: \n" + response.StatusDescription,"Erro",MessageBoxButtons.OK,MessageBoxIcon.Error);
                     r = "erro";
                 }
                 else

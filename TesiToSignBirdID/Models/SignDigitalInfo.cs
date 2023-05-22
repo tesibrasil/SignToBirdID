@@ -18,7 +18,7 @@ namespace SignBirdID.Models
         public int ShowSignatureLocation { get; set; }
         public string Axle { get; set; }
         public int Disabled { get; set; }
-
+        public string UserName { get; set; }
         public SignDigitalInfo()
         {
             //

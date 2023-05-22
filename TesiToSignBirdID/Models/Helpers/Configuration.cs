@@ -16,6 +16,7 @@ namespace SignBirdID.Models
         public string endpoint { get; set; }
         public string clientid { get; set; }
         public string clientsecret { get; set; }
+        public int showLocalization { get; set; }
 
         public Configuration ReadConfiguration()
         {
@@ -25,7 +26,7 @@ namespace SignBirdID.Models
 
             if (!File.Exists(@path))
             {
-                string j = "{\"connectionString\":\"\",\"endpoint\":\"\",\"clientid\":\"\",\"clientsecret\":\"\"}";
+                string j = "{\"connectionString\":\"\",\"endpoint\":\"\",\"clientid\":\"\",\"clientsecret\":\"\", \"showLocalization\":1}";
                 File.WriteAllText(@path, j);
             }
 

@@ -36,6 +36,41 @@ namespace SignBirdID.Controllers
             }
         }
 
+
+        //GET
+        public SignDigitalInfo GetSignDigitalInfoValidationByExamId(SqlConnection conn, string examId)
+        {
+            using (conn)
+            {
+                var signDigitalInfo = conn.Query<SignDigitalInfo>("SP_SignBirdID_GetSignDigitalInfoValidationByExamId",
+                param: new
+                {
+                    ExamId = examId
+                },
+                transaction: CurrentTransaction,
+                commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                return signDigitalInfo;
+            }
+        }
+
+        //GET
+        public string GetCPFByExamId(SqlConnection conn, string examId)
+        {
+            using (conn)
+            {
+                var cpf = conn.Query<string>("SP_SignBirdID_GetCPFByExamId",
+                param: new
+                {
+                    ExamId = examId
+                },
+                transaction: CurrentTransaction,
+                commandType: CommandType.StoredProcedure).FirstOrDefault();
+
+                return cpf;
+            }
+        }
+
         //CREATE
         public int CreateSignDigitalInfo(SqlConnection conn, SignDigitalInfo signDigitalInfo)
         {
